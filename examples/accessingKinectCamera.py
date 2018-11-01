@@ -4,7 +4,11 @@ import cv2
 import ctypes
 from pykinect2 import PyKinectV2
 from pykinect2 import PyKinectRuntime
+
+# Initialize the Kinect camera
 kinectcam = PyKinectRuntime.PyKinectRuntime(PyKinectV2.FrameSourceTypes_Color)
+
+#Function to draw a color frame
 def draw_color_frame(frame, target_surface):
     target_surface.lock()
     address = kinectcam.surface_as_array(target_surface.get_buffer())
@@ -12,9 +16,10 @@ def draw_color_frame(frame, target_surface):
     del address
     target_surface.unlock()
 
-pygame.init()
-frame_surface = pygame.Surface((kinectcam.color_frame_desc.Width, kinectcam.color_frame_desc.Height), 0, 32)
-clock = pygame.time.Clock()
+pygame.init() # initialize pygame
+frame_surface = pygame.Surface((kinectcam.color_frame_desc.Width, 
+                                kinectcam.color_frame_desc.Height), 0, 32) # create a surface frame
+clock = pygame.time.Clock() 
 pygame.display.set_caption("Kinect View")
 infoObject = pygame.display.Info()
 screen = pygame.display.set_mode((infoObject.current_w >> 1, infoObject.current_h >> 1),
